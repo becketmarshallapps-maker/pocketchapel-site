@@ -25,9 +25,9 @@ nav a.on { color: var(--gold); background: var(--gold-soft); }
 
 /* Home */
 .hero { background: radial-gradient(1200px 500px at 50% -10%, #24406f 0%, var(--navy) 55%, #0b1630 100%); color: var(--on-navy); text-align: center; padding: 72px 20px 84px; }
-.hero svg { width: 112px; height: 112px; }
-.hero h1 { font-family: "Cormorant Garamond", Georgia, serif; font-size: clamp(44px, 9vw, 72px); line-height: 1.05; margin: 18px 0 10px; font-weight: 700; }
-.hero p { max-width: 560px; margin: 0 auto; font-size: 19px; color: #C9D2E6; }
+.hero svg { width: 132px; height: 132px; } /* bigger logo (Becket, Nov 20) */
+.hero h1 { font-family: "Cormorant Garamond", Georgia, serif; font-size: clamp(50px, 10vw, 86px); line-height: 1.05; margin: 18px 0 10px; font-weight: 700; }
+.hero p { max-width: 540px; margin: 0 auto; font-size: 17px; text-wrap: balance; color: #C9D2E6; }
 .soon { display: inline-flex; gap: 10px; flex-wrap: wrap; justify-content: center; margin-top: 30px; }
 .pill { border: 1.5px solid var(--gold-bright); color: var(--gold-bright); border-radius: 999px; padding: 9px 18px; font-weight: 700; font-size: 15px; }
 .features { max-width: 1040px; margin: -44px auto 0; padding: 0 20px; display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; position: relative; }
@@ -93,6 +93,18 @@ footer a:hover { color: var(--gold); }
     linear-gradient(115deg, transparent 48%, rgba(212,175,106,.10) 50%, transparent 53%),
     linear-gradient(115deg, transparent 57%, rgba(212,175,106,.13) 59.5%, transparent 63%),
     linear-gradient(115deg, transparent 24%, rgba(255,255,255,.05) 27%, transparent 31%);
+  /* The rays fade out softly before the bottom of the navy, with no hard line (Becket, Nov 20).
+     This layer runs from 40% above to 40% below the hero, so its 78% mark is the hero's bottom. */
+  -webkit-mask-image: linear-gradient(to bottom, #000 52%, transparent 78%);
+          mask-image: linear-gradient(to bottom, #000 52%, transparent 78%);
+}
+/* Dark mode: the navy itself also melts into the page color at the bottom, so no edge shows. */
+@media (prefers-color-scheme: dark) {
+  .hero { background: linear-gradient(to bottom, transparent 60%, var(--bg) 100%), radial-gradient(1200px 500px at 50% -10%, #24406f 0%, var(--navy) 55%, #0b1630 100%); }
+  /* Longer rays (Becket, Nov 20): in dark mode they reach past the navy, behind the cards, then fade.
+     Sides and top stay clipped; only the bottom is let through. */
+  .hero { overflow: visible; overflow-x: clip; clip-path: inset(0 0 -600px 0); }
+  .hero::before { -webkit-mask-image: linear-gradient(to bottom, #000 50%, transparent 97%); mask-image: linear-gradient(to bottom, #000 50%, transparent 97%); }
 }
 .hero::after {
   content: ""; position: absolute; left: 50%; top: -120px; width: 520px; height: 520px; transform: translateX(-50%); z-index: 0; pointer-events: none;
@@ -107,4 +119,21 @@ footer a:hover { color: var(--gold); }
     linear-gradient(115deg, transparent 55%, color-mix(in srgb, var(--gold) 9%, transparent) 57%, transparent 60%);
   -webkit-mask-image: linear-gradient(to bottom, #000, transparent);
           mask-image: linear-gradient(to bottom, #000, transparent);
+}
+
+/* ---------- Home page (Becket, Nov 20) ---------- */
+/* The opening moment: logo, title, words and badge rise in once (pure CSS, so nothing stays hidden if scripts are off).
+   Tried and dropped Nov 20: chapel candle glow, rays following the pointer, "Another verse". */
+.hero > svg, .hero h1, .hero p, .hero .soon { animation: rise .7s ease both; }
+.hero h1 { animation-delay: .15s; }
+.hero p { animation-delay: .3s; }
+.hero .soon { animation-delay: .45s; }
+@keyframes rise { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+
+/* Keyboard focus is always visible. */
+a:focus-visible, button:focus-visible, summary:focus-visible { outline: 2px solid var(--gold-bright); outline-offset: 3px; border-radius: 6px; }
+
+/* Reduce Motion: everything appears right away. */
+@media (prefers-reduced-motion: reduce) {
+  .hero > svg, .hero h1, .hero p, .hero .soon { animation: none; }
 }

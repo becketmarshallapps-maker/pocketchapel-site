@@ -19,14 +19,31 @@
 <!-- The link to share (Becket, Nov 20): pocketchapel.app/get. Messages show the Pocket Chapel picture above
      instead of Apple's screenshot. iPhones go straight to the App Store; everyone else lands on the home page
      (Android: "coming soon to Google Play"; computers: the QR code). Add Google Play here once Android is out. -->
+<style>
+body{margin:0;background:#12223F;color:#F3EEE2;font:17px/1.5 -apple-system,Helvetica,Arial,sans-serif;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;text-align:center;padding:24px;box-sizing:border-box}
+.logo{width:104px;height:104px}
+h1{font:600 40px/1.1 Georgia,"Times New Roman",serif;margin:0;letter-spacing:.3px}
+p{margin:0;color:#C9D2E6;max-width:300px}
+.badge{display:inline-block;line-height:0;border-radius:10px;margin-top:6px}
+.badge img{width:162px;height:54px;display:block}
+.home{color:#D4AF6A;font-size:15px;text-decoration:none}
+</style>
+</head>
+<body>
+<!-- Nov 21: the page now shows the logo and an App Store button first, so the dark Pocket Chapel page (not a blank
+     white one) sits behind Safari's "Open this page in App Store?" box, and anyone who taps Cancel can still get the app. -->
+<svg class="logo" viewBox="0 0 100 100" aria-hidden="true"><rect x="47" y="6" width="6" height="30" fill="#D4AF6A"/><rect x="40" y="13" width="20" height="6" fill="#D4AF6A"/><path fill-rule="evenodd" d="M20 92 V54 L50 30 L80 54 V92 H59 V70 C59 63 54 58 50 56 C46 58 41 63 41 70 V92 Z M54.5 45 A4.5 4.5 0 1 0 45.5 45 A4.5 4.5 0 1 0 54.5 45 Z" fill="#D4AF6A"/></svg>
+<h1>Pocket Chapel</h1>
+<p>Daily prayer and devotions for every Christian.</p>
+<a class="badge" href="https://apps.apple.com/app/pocket-chapel/id6829996127"><img src="/app-store-badge.svg" alt="Download on the App Store"></a>
+<a class="home" href="/">Visit pocketchapel.app</a>
 <script>
 (function () {
   var ua = navigator.userAgent || '';
   var ios = /iPhone|iPad|iPod/i.test(ua) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
-  location.replace(ios ? 'https://apps.apple.com/app/pocket-chapel/id6829996127' : '/');
+  // iPhones: open the App Store after the page has drawn. Everyone else: the home page (Android "coming soon", computers the QR code).
+  setTimeout(function () { location.replace(ios ? 'https://apps.apple.com/app/pocket-chapel/id6829996127' : '/'); }, 400);
 })();
 </script>
-<style>body{margin:0;background:#12223F;color:#F3EEE2;font:17px/1.6 -apple-system,Helvetica,Arial,sans-serif;display:grid;place-items:center;min-height:100vh;text-align:center}a{color:#D4AF6A}</style>
-</head>
-<body><p>Opening Pocket Chapel…<br><a href="https://apps.apple.com/app/pocket-chapel/id6829996127">App Store</a> · <a href="/">pocketchapel.app</a></p></body>
+</body>
 </html>
